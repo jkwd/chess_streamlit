@@ -1,7 +1,6 @@
 import streamlit as st
 import altair as alt
 
-from constants import CHESS_DB
 import json
 import time
 import duckdb
