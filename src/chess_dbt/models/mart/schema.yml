@@ -1,0 +1,116 @@
+version: 2
+
+models:
+  - name: games
+    config:
+      pre_hook: "SET TimeZone = 'UTC';"
+    columns:
+      - name: game_uuid
+        description: "{{ doc('game_uuid') }}"
+      - name: url
+        description: "{{ doc('url') }}"
+      - name: rated
+        description: "{{ doc('rated') }}"
+      - name: rules
+        description: "{{ doc('rules') }}"
+      - name: time_class
+        description: "{{ doc('time_class') }}"
+      - name: game_mode
+        description: "{{ doc('game_mode') }}"
+      - name: game_analysis_url
+        description: "{{ doc('game_analysis_url') }}"
+      - name: time_control
+        description: "{{ doc('time_control') }}"
+      - name: time_control_base
+        description: "{{ doc('time_control_base') }}"
+      - name: time_control_add_seconds
+        description: "{{ doc('time_control_add_seconds') }}"
+      - name: time_played_seconds
+        description: "{{ doc('time_played_seconds') }}"
+      - name: game_start_date
+        description: "{{ doc('game_start_date') }}"
+      - name: game_start_time
+        description: "{{ doc('game_start_time') }}"
+      - name: game_start_timestamp
+        description: "{{ doc('game_start_timestamp') }}"
+      - name: game_end_timestamp
+        description: "{{ doc('game_end_timestamp') }}"
+      - name: white__uuid
+        description: "{{ doc('white__uuid') }}"
+      - name: white__username
+        description: "{{ doc('white__username') }}"
+      - name: white__aid
+        description: "{{ doc('white__aid') }}"
+      - name: white__rating
+        description: "{{ doc('white__rating') }}"
+      - name: white__result
+        description: "{{ doc('white__result') }}"
+      - name: white_total_move_time
+        description: "{{ doc('white_total_move_time') }}"
+      - name: white_num_moves
+        description: "{{ doc('white_num_moves') }}"
+      - name: black__uuid
+        description: "{{ doc('black__uuid') }}"
+      - name: black__username
+        description: "{{ doc('black__username') }}"
+      - name: black__aid
+        description: "{{ doc('black__aid') }}"
+      - name: black__rating
+        description: "{{ doc('black__rating') }}"
+      - name: black__result
+        description: "{{ doc('black__result') }}"
+      - name: black_total_move_time
+        description: "{{ doc('black_total_move_time') }}"
+      - name: black_num_moves
+        description: "{{ doc('black_num_moves') }}"
+      - name: player_color
+        description: "{{ doc('player_color') }}"
+      - name: player_rating
+        description: "{{ doc('player_rating') }}"
+      - name: player_result
+        description: "{{ doc('player_result') }}"
+      - name: player_total_move_time
+        description: "{{ doc('player_total_move_time') }}"
+      - name: player_num_moves
+        description: "{{ doc('player_num_moves') }}"
+      - name: opponent_rating
+        description: "{{ doc('opponent_rating') }}"
+      - name: opponent_result
+        description: "{{ doc('opponent_result') }}"
+      - name: opponent_total_move_time
+        description: "{{ doc('opponent_total_move_time') }}"
+      - name: opponent_num_moves
+        description: "{{ doc('opponent_num_moves') }}"
+      - name: is_stronger_opponent
+        description: "{{ doc('is_stronger_opponent') }}"
+      - name: player_wdl
+        description: "{{ doc('player_wdl') }}"
+      - name: player_wdl_reason
+        description: "{{ doc('player_wdl_reason') }}"
+      - name: initial_setup
+        description: "{{ doc('initial_setup') }}"
+      - name: fen
+        description: "{{ doc('fen') }}"
+      - name: pgn
+        description: "{{ doc('pgn') }}"
+      - name: pgn_moves
+        description: "{{ doc('pgn_moves') }}"
+      - name: pgn_move_extract
+        description: "{{ doc('pgn_move_extract') }}"
+      - name: pgn_clock_extract
+        description: "{{ doc('pgn_clock_extract') }}"
+      - name: eco
+        description: "{{ doc('eco') }}"
+      - name: eco_url
+        description: "{{ doc('eco_url') }}"
+      - name: eco_name
+        description: "{{ doc('eco_name') }}"
+      - name: checkmate_pieces
+        description: "{{ doc('checkmate_pieces') }}"
+      - name: ended_game_phase
+        description: "{{ doc('ended_game_phase') }}"
+      - name: tcn
+      - name: accuracies__white
+        description: "{{ doc('accuracies__white') }}"
+      - name: accuracies__black
+        description: "{{ doc('accuracies__black') }}"

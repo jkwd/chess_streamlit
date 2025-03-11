@@ -1,0 +1,284 @@
+version: 2
+
+models:
+  - name: prep_player_games
+    description: >
+      This model is a transformation of the raw player games data.
+    config:
+      pre_hook: "SET TimeZone = 'UTC';"
+    columns:
+      - name: end_time
+        description: "{{ doc('end_time') }}"
+      - name: url
+        description: "{{ doc('url') }}"
+      - name: pgn
+        description: "{{ doc('pgn') }}"
+      - name: time_control
+        description: "{{ doc('time_control') }}"
+      - name: rated
+        description: "{{ doc('rated') }}"
+      - name: tcn
+      - name: game_uuid
+        description: "{{ doc('game_uuid') }}"
+      - name: initial_setup
+        description: "{{ doc('initial_setup') }}"
+      - name: fen
+        description: "{{ doc('fen') }}"
+      - name: time_class
+        description: "{{ doc('time_class') }}"
+      - name: rules
+        description: "{{ doc('rules') }}"
+      - name: white__rating
+        description: "{{ doc('white__rating') }}"
+      - name: white__result
+        description: "{{ doc('white__result') }}"
+      - name: white__aid
+        description: "{{ doc('white__aid') }}"
+      - name: white__username
+        description: "{{ doc('white__username') }}"
+      - name: white__uuid
+        description: "{{ doc('white__uuid') }}"
+      - name: black__rating
+        description: "{{ doc('black__rating') }}"
+      - name: black__result
+        description: "{{ doc('black__result') }}"
+      - name: black__aid
+        description: "{{ doc('black__aid') }}"
+      - name: black__username
+        description: "{{ doc('black__username') }}"
+      - name: black__uuid
+        description: "{{ doc('black__uuid') }}"
+      - name: _dlt_load_id
+      - name: _dlt_id
+      - name: accuracies__white
+        description: "{{ doc('accuracies__white') }}"
+      - name: accuracies__black
+        description: "{{ doc('accuracies__black') }}"
+      - name: time_control_base
+        description: "{{ doc('time_control_base') }}"
+      - name: time_control_add_seconds
+        description: "{{ doc('time_control_add_seconds') }}"
+      - name: pgn_moves
+        description: "{{ doc('pgn_moves') }}"
+      - name: pgn_move_extract
+        description: "{{ doc('pgn_move_extract') }}"
+      - name: pgn_clock_extract
+        description: "{{ doc('pgn_clock_extract') }}"
+      - name: pgn_move_extract_string
+        description: "{{ doc('pgn_move_extract_string') }}"
+      - name: game_analysis_url
+        description: "{{ doc('game_analysis_url') }}"
+      - name: eco
+        description: "{{ doc('eco') }}"
+      - name: eco_url
+        description: "{{ doc('eco_url') }}"
+      - name: eco_name
+        description: "{{ doc('eco_name') }}"
+      - name: player_color
+        description: "{{ doc('player_color') }}"
+      - name: player_rating
+        description: "{{ doc('player_rating') }}"
+      - name: player_result
+        description: "{{ doc('player_result') }}"
+      - name: opponent_rating
+        description: "{{ doc('opponent_rating') }}"
+      - name: opponent_result
+        description: "{{ doc('opponent_result') }}"
+      - name: is_stronger_opponent
+        description: "{{ doc('is_stronger_opponent') }}"
+      - name: player_wdl
+        description: "{{ doc('player_wdl') }}"
+        tests:
+          - accepted_values:
+              values: ['win', 'draw', 'lose']
+      - name: player_wdl_reason
+        description: "{{ doc('player_wdl_reason') }}"
+      - name: game_start_date
+        description: "{{ doc('game_start_date') }}"
+      - name: game_start_time
+        description: "{{ doc('game_start_time') }}"
+      - name: game_start_timestamp
+        description: "{{ doc('game_start_timestamp') }}"
+        tests:
+          - not_null
+      - name: game_end_timestamp
+        description: "{{ doc('game_end_timestamp') }}"
+      - name: time_played_interval
+        description: "{{ doc('time_played_interval') }}"
+      - name: time_played_seconds
+        description: "{{ doc('time_played_seconds') }}"
+  
+  - name: prep_player_games_checkmate
+    config:
+      materialized: table
+      tags: ['python']
+      packages:
+        - chess
+    columns:
+      - name: end_time
+        description: "{{ doc('end_time') }}"
+      - name: url
+        description: "{{ doc('url') }}"
+      - name: pgn
+        description: "{{ doc('pgn') }}"
+      - name: time_control
+        description: "{{ doc('time_control') }}"
+      - name: rated
+        description: "{{ doc('rated') }}"
+      - name: tcn
+      - name: game_uuid
+        description: "{{ doc('game_uuid') }}"
+      - name: initial_setup
+        description: "{{ doc('initial_setup') }}"
+      - name: fen
+        description: "{{ doc('fen') }}"
+      - name: time_class
+        description: "{{ doc('time_class') }}"
+      - name: rules
+        description: "{{ doc('rules') }}"
+      - name: white__rating
+        description: "{{ doc('white__rating') }}"
+      - name: white__result
+        description: "{{ doc('white__result') }}"
+      - name: white__aid
+        description: "{{ doc('white__aid') }}"
+      - name: white__username
+        description: "{{ doc('white__username') }}"
+      - name: white__uuid
+        description: "{{ doc('white__uuid') }}"
+      - name: black__rating
+        description: "{{ doc('black__rating') }}"
+      - name: black__result
+        description: "{{ doc('black__result') }}"
+      - name: black__aid
+        description: "{{ doc('black__aid') }}"
+      - name: black__username
+        description: "{{ doc('black__username') }}"
+      - name: black__uuid
+        description: "{{ doc('black__uuid') }}"
+      - name: eco
+        description: "{{ doc('eco') }}"
+      - name: _dlt_load_id
+      - name: _dlt_id
+      - name: accuracies__white
+        description: "{{ doc('accuracies__white') }}"
+      - name: accuracies__black
+        description: "{{ doc('accuracies__black') }}"
+      - name: time_control_base
+        description: "{{ doc('time_control_base') }}"
+      - name: time_control_add_seconds
+        description: "{{ doc('time_control_add_seconds') }}"
+      - name: pgn_moves
+        description: "{{ doc('pgn_moves') }}"
+      - name: pgn_move_extract
+        description: "{{ doc('pgn_move_extract') }}"
+      - name: pgn_clock_extract
+        description: "{{ doc('pgn_clock_extract') }}"
+      - name: eco_url
+        description: "{{ doc('eco_url') }}"
+      - name: eco_name
+        description: "{{ doc('eco_name') }}"
+      - name: player_color
+        description: "{{ doc('player_color') }}"
+      - name: player_rating
+        description: "{{ doc('player_rating') }}"
+      - name: player_result
+        description: "{{ doc('player_result') }}"
+      - name: opponent_rating
+        description: "{{ doc('opponent_rating') }}"
+      - name: opponent_result
+        description: "{{ doc('opponent_result') }}"
+      - name: is_stronger_opponent
+        description: "{{ doc('is_stronger_opponent') }}"
+      - name: player_wdl
+        description: "{{ doc('player_wdl') }}"
+        tests:
+          - accepted_values:
+              values: ['win', 'draw', 'lose']
+      - name: player_wdl_reason
+        description: "{{ doc('player_wdl_reason') }}"
+      - name: game_start_date
+        description: "{{ doc('game_start_date') }}"
+      - name: game_start_time
+        description: "{{ doc('game_start_time') }}"
+      - name: game_start_timestamp
+        description: "{{ doc('game_start_timestamp') }}"
+        tests:
+          - not_null
+      - name: game_end_timestamp
+        description: "{{ doc('game_end_timestamp') }}"
+      - name: time_played_interval
+        description: "{{ doc('time_played_interval') }}"
+      - name: time_played_seconds
+        description: "{{ doc('time_played_seconds') }}"
+      - name: checkmate_pieces
+        description: "{{ doc('checkmate_pieces') }}"
+  
+  - name: prep_game_moves_py
+    description: >
+      This model processes the move by move details of the game.
+    config:
+      materialized: table
+      tags: ['python']
+      packages:
+        - chess
+    columns:
+      - name: id
+        description: "{{ doc('game_moves_id') }}"
+        tests:
+          - unique
+      - name: time_class
+        description: "{{ doc('time_class') }}"
+      - name: time_control_base
+        description: "{{ doc('time_control_base') }}"
+      - name: time_control_add_seconds
+        description: "{{ doc('time_control_add_seconds') }}"
+      - name: game_uuid
+        description: "{{ doc('game_uuid') }}"
+      - name: game_move_index
+        description: "{{ doc('game_move_index') }}"
+      - name: color_move
+        description: "{{ doc('color_move') }}"
+      - name: color_move_index
+        description: "{{ doc('color_move_index') }}"
+        tests:
+          - not_null
+      - name: game_move
+        description: "{{ doc('game_move') }}"
+      - name: pgn_cum_move
+        description: "{{ doc('pgn_cum_move') }}"
+      - name: from_square
+        description: "{{ doc('from_square') }}"
+      - name: to_square
+        description: "{{ doc('to_square') }}"
+      - name: moved_piece
+        description: "{{ doc('moved_piece') }}"
+      - name: forked_pieces
+        description: "{{ doc('forked_pieces') }}"
+      - name: captured_piece
+        description: "{{ doc('captured_piece') }}"
+      - name: major_minor_cnt
+        description: "{{ doc('major_minor_cnt') }}"
+      - name: is_backrank_sparse
+        description: "{{ doc('is_backrank_sparse') }}"
+      - name: is_midgame
+        description: "{{ doc('is_midgame') }}"
+      - name: is_endgame
+        description: "{{ doc('is_endgame') }}"
+      - name: game_phase
+        description: "{{ doc('game_phase') }}"
+      - name: prev_clock_interval
+        description: "{{ doc('prev_clock_interval') }}"
+      - name: clock_interval_move
+        description: "{{ doc('clock_interval_move') }}"
+      - name: clock_interval_post_move
+        description: "{{ doc('clock_interval_post_move') }}"
+      - name: move_time_seconds
+        description: "{{ doc('move_time_seconds') }}"
+        tests:
+          - is_positive_approx:
+              threshold: 0.01
+
+tests:
+  - name: assert_checkmate_valid
+  - name: assert_no_checkmate_valid

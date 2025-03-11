@@ -1,0 +1,11 @@
+chess_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: data/chess.duckdb
+      threads: 1
+    prod:
+      type: duckdb
+      path: data/chess.duckdb
+      threads: 4

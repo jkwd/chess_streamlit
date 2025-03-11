@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: stg_player_games
+    config:
+      pre_hook: "SET TimeZone = 'UTC';"
+    columns:
+    - name: end_time
+      description: "{{ doc('end_time') }}"
+    - name: url
+      description: "{{ doc('url') }}"
+    - name: pgn
+      description: "{{ doc('pgn') }}"
+    - name: time_control
+      description: "{{ doc('time_control') }}"
+      tests:
+        - not_null
+    - name: rated
+      description: "{{ doc('rated') }}"
+    - name: tcn
+    - name: game_uuid
+      description: "{{ doc('game_uuid') }}"
+      tests:
+        - unique
+        - not_null
+    - name: initial_setup
+      description: "{{ doc('initial_setup') }}"
+    - name: fen
+      description: "{{ doc('fen') }}"
+    - name: time_class
+      description: "{{ doc('time_class') }}"
+    - name: rules
+      description: "{{ doc('rules') }}"
+    - name: white__rating
+      description: "{{ doc('white__rating') }}"
+    - name: white__result
+      description: "{{ doc('white__result') }}"
+      tests:
+        - not_null
+    - name: white__aid
+      description: "{{ doc('white__aid') }}"
+    - name: white__username
+      description: "{{ doc('white__username') }}"
+      tests:
+        - not_null
+    - name: white__uuid
+      description: "{{ doc('white__uuid') }}"
+    - name: black__rating
+      description: "{{ doc('black__rating') }}"
+    - name: black__result
+      description: "{{ doc('black__result') }}"
+      tests:
+        - not_null
+    - name: black__aid
+      description: "{{ doc('black__aid') }}"
+    - name: black__username
+      description: "{{ doc('black__username') }}"
+      tests:
+        - not_null
+    - name: black__uuid
+      description: "{{ doc('black__uuid') }}"
+    - name: _dlt_load_id
+    - name: _dlt_id
+    - name: accuracies__white
+      description: "{{ doc('accuracies__white') }}"
+    - name: accuracies__black
+      description: "{{ doc('accuracies__black') }}"
