@@ -26,7 +26,7 @@ st.set_page_config(layout="wide")
 
 st.title("Welcome to Chess Dashboard")
 
-username = st.text_input("Enter chess.com username", placeholder="johnnywhoopp")
+username = st.text_input("Enter chess.com username", placeholder="magnuscarlsen")
 if st.button("Get Data"):
     try:
         progress_bar = st.progress(0, text=f'Getting data for {username}')
