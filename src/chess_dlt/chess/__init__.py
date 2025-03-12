@@ -11,17 +11,17 @@ from dlt.sources.helpers import requests
 from .helpers import get_path_with_retry, get_url_with_retry
 from .data_contracts import PlayersGames
 
-# # Create a logger
-# logger = logging.getLogger('dlt')
+# Create a logger
+logger = logging.getLogger('dlt')
 
-# # Set the log level
-# logger.setLevel(logging.INFO)
+# Set the log level
+logger.setLevel(logging.INFO)
 
-# # Create a file handler
-# handler = logging.FileHandler('data/dlt.log')
+# Create a file handler
+handler = logging.FileHandler('data/dlt.log')
 
-# # Add the handler to the logger
-# logger.addHandler(handler)
+# Add the handler to the logger
+logger.addHandler(handler)
 
 
 @dlt.source(name="chess")
