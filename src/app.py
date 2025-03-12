@@ -40,8 +40,6 @@ if st.button("Get Data"):
         )
         data=source(username=username),
         info = pipeline.run(data)
-
-        progress_bar.progress(25, text=f'Testing database connection')
         
         # initialize
         dbt = dbtRunner()
@@ -57,10 +55,10 @@ if st.button("Get Data"):
 
         # run the command
         res: dbtRunnerResult = dbt.invoke(debug)
-        progress_bar.progress(50, text=f'Processing data... This may take a few minutes')
+        progress_bar.progress(50, text=f'Getting insights... This may take a few minutes')
         
         res: dbtRunnerResult = dbt.invoke(build)
-        progress_bar.progress(100, text=f'Processing data completed...')
+        progress_bar.progress(100, text=f'Completed! Showing dashboard...')
         time.sleep(1)
         progress_bar.empty()
 
