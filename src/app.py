@@ -1,6 +1,7 @@
 import streamlit as st
 import altair as alt
 
+import os
 import json
 import time
 import duckdb
@@ -47,8 +48,7 @@ if st.button("Get Data"):
         # create CLI args as a list of strings
         project_dir = ['--project-dir', 'src/chess_dbt']
         profiles_dir = ['--profiles-dir', 'src/chess_dbt/profiles']
-        data = {"username": username}
-        json_str = json.dumps(data)
+        json_str = json.dumps({"username": username})
         args = ['--vars', json_str]
         debug = ["debug"] + project_dir + profiles_dir
         build = ["build"] + project_dir + profiles_dir + args

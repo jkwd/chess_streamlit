@@ -52,12 +52,14 @@ with player_games as (
             as player_wdl_reason
 
         -- PGN details
+        , regexp_split_to_array(pgn, '\n\n')[1] as pgn_header
         , regexp_split_to_array(pgn, '\n\n')[2] as pgn_moves
         , regexp_extract_all(pgn_moves, '\d+\.+ [\S]+') as pgn_move_extract
         , regexp_extract_all(pgn_moves, '{\[%clk \S+\]}') as pgn_clock_extract
-        , if(len(pgn_move_extract) > 0,
-            list_reduce(pgn_move_extract, (s, x) -> s || ' ' || x),
-            ''
+        , if(
+            len(pgn_move_extract) > 0
+            , list_reduce(pgn_move_extract, (s, x) -> s || ' ' || x)
+            , ''
         ) as pgn_move_extract_string
         , 'https://lichess.org/analysis/pgn/'
         || replace(replace(pgn_move_extract_string, ' ', '%20'), '#', '')
@@ -78,6 +80,11 @@ with player_games as (
         , end_time::timestamp as game_end_timestamp
         , age(game_end_timestamp, game_start_timestamp) as time_played_interval
         , epoch(time_played_interval) as time_played_seconds
+
+        , get_checkmate_pieces_udf(fen, player_color, player_result, opponent_result)
+            as checkmate_pieces
+
+
     from player_games
 )
 

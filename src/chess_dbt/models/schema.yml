@@ -5,6 +5,9 @@ sources:
     schema: chess_data_raw
     tables:
       - name: players_games
+        meta:
+          dagster:
+            asset_key: ["dlt_chess_players_games"]
         columns:
           - name: url
             description: "{{ doc('url') }}"

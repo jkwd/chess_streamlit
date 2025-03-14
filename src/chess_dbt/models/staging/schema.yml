@@ -11,6 +11,8 @@ models:
       description: "{{ doc('url') }}"
     - name: pgn
       description: "{{ doc('pgn') }}"
+      tests:
+        - not_null
     - name: time_control
       description: "{{ doc('time_control') }}"
       tests:
@@ -29,8 +31,12 @@ models:
       description: "{{ doc('fen') }}"
     - name: time_class
       description: "{{ doc('time_class') }}"
+      tests:
+        - not_null
     - name: rules
       description: "{{ doc('rules') }}"
+      tests:
+        - not_null
     - name: white__rating
       description: "{{ doc('white__rating') }}"
     - name: white__result

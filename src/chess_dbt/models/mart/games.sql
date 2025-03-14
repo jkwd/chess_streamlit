@@ -1,5 +1,5 @@
 with game_moves_pivot as (
-    pivot {{ ref('prep_game_moves_py') }}
+    pivot {{ ref('prep_game_moves') }}
     on color_move
     using sum(move_time_seconds) as total_move_time, count(*) as num_moves
     group by game_uuid
@@ -10,7 +10,7 @@ with game_moves_pivot as (
         game_uuid
         , game_move_index
         , game_phase
-    from {{ ref('prep_game_moves_py') }}
+    from {{ ref('prep_game_moves') }}
 )
 
 , ended_game_phase as (
@@ -23,7 +23,7 @@ with game_moves_pivot as (
 
 , player_games as (
     select *
-    from {{ ref('prep_player_games_checkmate') }}
+    from {{ ref('prep_player_games') }}
 )
 
 , joined as (

@@ -1,11 +1,13 @@
 chess_dbt:
-  target: dev
+  target: prod
   outputs:
-    dev:
-      type: duckdb
-      path: data/chess.duckdb
-      threads: 1
     prod:
       type: duckdb
       path: data/chess.duckdb
       threads: 4
+      module_paths:
+        - chess_streamlit/src/chess_dbt/lib
+      plugins:
+        # Custom module in the lib directory that defines SQL UDFs written in Python at the start of
+        # the dbt run
+        - module: my_custom_functions
