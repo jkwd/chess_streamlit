@@ -20,7 +20,8 @@ import dlt
 # dbt
 from dbt.cli.main import dbtRunner, dbtRunnerResult
 
-db_path = f'data/chess.duckdb'
+data_folder = 'data'
+db_path = f'{data_folder}/chess.duckdb'
 
 st.set_page_config(layout="wide")
 
@@ -48,10 +49,13 @@ if st.button("Get Data"):
         # create CLI args as a list of strings
         project_dir = ['--project-dir', 'src/chess_dbt']
         profiles_dir = ['--profiles-dir', 'src/chess_dbt/profiles']
+        target = ['--target', 'prod']
+        
         json_str = json.dumps({"username": username})
         args = ['--vars', json_str]
-        debug = ["debug"] + project_dir + profiles_dir
-        build = ["build"] + project_dir + profiles_dir + args
+        
+        debug = ["debug"] + project_dir + profiles_dir + target
+        build = ["build"] + project_dir + profiles_dir + target + args
 
         # run the command
         res: dbtRunnerResult = dbt.invoke(debug)
@@ -65,16 +69,32 @@ if st.button("Get Data"):
     except Exception as e:
         print(e)
     
-    # Connect to the database
-    st.write(os.getcwd())
-    
+    # Save data into parquet file
     conn = duckdb.connect(database=db_path, read_only=True)
+    df = conn.sql("SELECT * FROM main.games").df()
+    df.to_parquet(f'{data_folder}/{username}.parquet')
+    conn.close()
+    
+
+# Check if username parquet file exists
+if username is None or username == "":
+    st.warning(f"Please enter a valid username and click 'Get Data'")
+
+elif not os.path.exists(f'{data_folder}/{username}.parquet'):
+    st.warning(f"Data for {username} does not exist. Please enter a valid username and click 'Get Data'")
+
+else:
+    st.header(f"Username: {username}")
+    user_df = pd.read_parquet(f'{data_folder}/{username}.parquet')
+
+    # Connect to the database    
+    conn = duckdb.connect()
 
     filter_1, filter_2, filter_3 = st.columns(3)
     with filter_1: 
         df_time_class = conn.sql("""
             SELECT DISTINCT time_class
-            FROM main.games
+            FROM user_df
             order by time_class
         """).df()
         time_class = st.selectbox('Time Class', df_time_class, index=2)
@@ -82,7 +102,7 @@ if st.button("Get Data"):
     with filter_2: 
         filter_player_color = conn.sql("""
             SELECT DISTINCT player_color
-            FROM main.games
+            FROM user_df
             order by player_color
         """).df()['player_color'].tolist()
         filter_player_color = ['All'] + filter_player_color
@@ -98,7 +118,7 @@ if st.button("Get Data"):
 
     ts_min, ts_max = conn.sql(f"""
         select min(game_start_date), max(game_start_date)
-        from main.games
+        from user_df
         WHERE time_class = '{time_class}'
         AND player_color in ({', '.join([f"'{color}'" for color in player_color])}) 
     """).df().iloc[0]
@@ -117,7 +137,7 @@ if st.button("Get Data"):
     # Get base data
     query = f"""
         SELECT *
-        FROM main.games
+        FROM user_df
         WHERE time_class = '{time_class}'
         AND player_color in ({', '.join([f"'{color}'" for color in player_color])})
         AND game_start_date between '{slider_min}' and '{slider_max}'
