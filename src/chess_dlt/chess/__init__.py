@@ -83,7 +83,9 @@ def players_archives(username: str) -> Iterator[List[TDataItem]]:
 
 
 @dlt.resource(
-    write_disposition="replace", columns=PlayersGames
+    primary_key="uuid",
+    write_disposition="merge",
+    columns=PlayersGames
 )
 def players_games(
     username: str

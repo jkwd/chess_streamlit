@@ -23,6 +23,5 @@ vars:
 
 models:
   chess_dbt:
-    materialized: table
     staging:
       materialized: view

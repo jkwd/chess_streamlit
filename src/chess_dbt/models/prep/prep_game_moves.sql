@@ -1,6 +1,15 @@
+{{
+    config(
+        materialized='incremental',
+        incremental_strategy='delete+insert',
+        unique_key='id'
+    )
+}}
+
 with prep_player_games as (
     select
         game_uuid
+        , player_username
         , time_class
         , time_control_base
         , time_control_add_seconds
@@ -9,6 +18,8 @@ with prep_player_games as (
         , pgn_move_extract
         , pgn_clock_extract
     from {{ ref('prep_player_games') }}
+    
+    where player_username = '{{ var("username") }}'
 )
 
 , fens_data as (
@@ -109,6 +120,7 @@ select
 -- Game details
     id
     , game_uuid
+    , player_username
     , time_class
     , time_control_base
     , time_control_add_seconds

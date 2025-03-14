@@ -1,6 +1,17 @@
+{{
+    config(
+        materialized='incremental',
+        incremental_strategy='delete+insert',
+        unique_key='game_uuid'
+    )
+}}
+
 with player_games as (
     select *
     from {{ ref('stg_player_games') }}
+    
+    where lower(white__username) = lower('{{ var("username") }}')
+        or lower(black__username) = lower('{{ var("username") }}')
 )
 
 , final as (
@@ -27,6 +38,7 @@ with player_games as (
         end as game_mode
 
         -- PLAYER details
+        , lower('{{ var("username") }}') as player_username
         , if(lower(white__username) = '{{ var("username") }}', 'White', 'Black')
             as player_color
         , if(player_color = 'White', white__rating, black__rating)

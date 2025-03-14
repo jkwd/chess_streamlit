@@ -1,16 +1,29 @@
-with game_moves_pivot as (
-    pivot {{ ref('prep_game_moves') }}
-    on color_move
-    using sum(move_time_seconds) as total_move_time, count(*) as num_moves
-    group by game_uuid
-)
+{{
+    config(
+        materialized='incremental',
+        incremental_strategy='delete+insert',
+        unique_key='game_uuid'
+    )
+}}
 
-, game_moves as (
+with game_moves as (
     select
         game_uuid
         , game_move_index
         , game_phase
+
+        , color_move
+        , move_time_seconds
     from {{ ref('prep_game_moves') }}
+
+    where player_username = '{{ var("username") }}'
+)
+
+, game_moves_pivot as (
+    pivot game_moves
+    on color_move
+    using sum(move_time_seconds) as total_move_time, count(*) as num_moves
+    group by game_uuid
 )
 
 , ended_game_phase as (
@@ -104,6 +117,7 @@ select
     , black_num_moves
 
     -- PLAYER-OPPONENT
+    , player_username
     , player_color
     , player_rating
     , player_result
