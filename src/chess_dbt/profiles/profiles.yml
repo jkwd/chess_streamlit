@@ -6,7 +6,7 @@ chess_dbt:
       path: data/chess.duckdb
       threads: 4
       module_paths:
-        - chess_streamlit/src/chess_dbt/lib
+        - /mount/src/chess_streamlit/src/chess_dbt/lib
       plugins:
         # Custom module in the lib directory that defines SQL UDFs written in Python at the start of
         # the dbt run
