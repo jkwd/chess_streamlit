@@ -66,6 +66,8 @@ if st.button("Get Data"):
         print(e)
     
     # Connect to the database
+    st.write(os.getcwd())
+    
     conn = duckdb.connect(database=db_path, read_only=True)
 
     filter_1, filter_2, filter_3 = st.columns(3)
